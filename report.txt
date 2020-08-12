@@ -1,0 +1,158 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 8 files
+Detected 6 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: src/model.py
+--------------------------------------------------------------------------------
+src/model.py:32:12: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/model.py:33:12: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/model.py:53:12: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/model.py:54:12: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/model.py:152:14: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+src/model.py:154:14: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: 'src'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'src/generate_unconditional_samples.py'
+ outputting to 'srcv2/generate_unconditional_samples.py'
+--------------------------------------------------------------------------------
+
+52:9: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+54:8: INFO: Renamed 'tf.set_random_seed' to 'tf.compat.v1.set_random_seed'
+63:16: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/sample.py'
+ outputting to 'srcv2/sample.py'
+--------------------------------------------------------------------------------
+
+13:15: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+18:11: INFO: Added keywords to args of function 'tf.cond'
+26:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+30:24: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+31:21: INFO: Added keywords to args of function 'tf.reduce_min'
+32:15: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+47:76: INFO: Renamed 'tf.AUTO_REUSE' to 'tf.compat.v1.AUTO_REUSE'
+57:9: INFO: `name` passed to `name_scope`. Because you may be re-entering an existing scope, it is not safe to convert automatically,  the v2 name_scope does not support re-entering scopes by name.
+
+57:9: INFO: Renamed 'tf.name_scope' to 'tf.compat.v1.name_scope'
+65:57: INFO: Changed tf.to_float call to tf.cast(..., dtype=tf.float32).
+70:22: INFO: Added keywords to args of function 'tf.multinomial'
+70:22: INFO: Renamed keyword argument for tf.multinomial from output_dtype to dtype
+70:22: INFO: Renamed 'tf.multinomial' to 'tf.random.categorical'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/model.py'
+ outputting to 'srcv2/model.py'
+--------------------------------------------------------------------------------
+
+17:14: INFO: Added keywords to args of function 'tf.shape'
+21:12: INFO: Added keywords to args of function 'tf.reduce_max'
+23:16: INFO: Added keywords to args of function 'tf.reduce_sum'
+30:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+32:12: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+32:12: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+32:56: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+32:56: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+33:12: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+33:12: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+33:56: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+33:56: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+34:12: INFO: Added keywords to args of function 'tf.reduce_mean'
+35:12: INFO: Added keywords to args of function 'tf.reduce_mean'
+36:22: INFO: Renamed 'tf.rsqrt' to 'tf.math.rsqrt'
+51:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+53:12: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+53:12: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+53:58: INFO: tf.random_normal_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+53:58: INFO: Renamed 'tf.random_normal_initializer' to 'tf.compat.v1.random_normal_initializer'
+54:12: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+54:12: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+54:51: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+54:51: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+77:15: INFO: Added keywords to args of function 'tf.transpose'
+81:28: INFO: Added keywords to args of function 'tf.transpose'
+94:16: INFO: Renamed 'tf.rsqrt' to 'tf.math.rsqrt'
+101:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+116:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+124:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+137:12: INFO: Added keywords to args of function 'tf.convert_to_tensor'
+142:17: INFO: Added keywords to args of function 'tf.shape'
+143:13: INFO: Added keywords to args of function 'tf.shape'
+147:54: INFO: Renamed 'tf.AUTO_REUSE' to 'tf.compat.v1.AUTO_REUSE'
+148:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+152:14: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+152:14: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+153:41: INFO: tf.random_normal_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+153:41: INFO: Renamed 'tf.random_normal_initializer' to 'tf.compat.v1.random_normal_initializer'
+154:14: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+154:14: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+155:41: INFO: tf.random_normal_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+155:41: INFO: Renamed 'tf.random_normal_initializer' to 'tf.compat.v1.random_normal_initializer'
+156:45: INFO: Added keywords to args of function 'tf.shape'
+166:16: INFO: Renamed 'tf.add_to_collection' to 'tf.compat.v1.add_to_collection'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/accumulate.py'
+ outputting to 'srcv2/accumulate.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/memory_saving_gradients.py'
+ outputting to 'srcv2/memory_saving_gradients.py'
+--------------------------------------------------------------------------------
+
+13:8: INFO: Renamed 'tf.GraphKeys' to 'tf.compat.v1.GraphKeys'
+89:26: INFO: Renamed 'tf.get_collection' to 'tf.compat.v1.get_collection'
+336:7: INFO: `name` passed to `name_scope`. Because you may be re-entering an existing scope, it is not safe to convert automatically,  the v2 name_scope does not support re-entering scopes by name.
+
+336:7: INFO: Renamed 'tf.name_scope' to 'tf.compat.v1.name_scope'
+339:6: INFO: Renamed 'tf.get_default_graph' to 'tf.compat.v1.get_default_graph'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/encoder.py'
+ outputting to 'srcv2/encoder.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/load_dataset.py'
+ outputting to 'srcv2/load_dataset.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/interactive_conditional_samples.py'
+ outputting to 'srcv2/interactive_conditional_samples.py'
+--------------------------------------------------------------------------------
+
+55:9: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+56:18: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+58:8: INFO: Renamed 'tf.set_random_seed' to 'tf.compat.v1.set_random_seed'
+66:16: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+--------------------------------------------------------------------------------
+
