@@ -405,7 +405,7 @@ class Node(object):
         vice versa.
     """
     if target is None:
-      target = tf.NodeDef()
+      target = tf.compat.v1.NodeDef()
     target.name = self.name
     target.op = self.op_type
     for input_tensor in self.inputs:
@@ -457,7 +457,7 @@ class Node(object):
       raise ValueError("Node {} has more than one attribute "
                        "under key '{}'".format(self, key))
     ret = matches[0]
-    if isinstance(ret, tf.AttrValue):
+    if isinstance(ret, tf.compat.v1.AttrValue):
       return util.attr_value_to_python_type(ret)
     else:
       return ret
@@ -675,7 +675,7 @@ class Node(object):
       # so we instantiate a dummy graph and create a dummy Operation object.
       temp_graph = tf.Graph()
       with temp_graph.as_default():
-        input_placeholders = [tf.placeholder(shape=t.shape, dtype=t.dtype) for
+        input_placeholders = [tf.compat.v1.placeholder(shape=t.shape, dtype=t.dtype) for
                               t in self._inputs]
         # See the docs for tf.Operation for important notes about the semantics
         # of each arg to the following constructor.
@@ -823,7 +823,7 @@ def _validate_colocation_group_attr(value):
   holds collocation groups.
 
   Returns a list of node names that comprise the group."""
-  if isinstance(value, tf.AttrValue):
+  if isinstance(value, tf.compat.v1.AttrValue):
     # Internal TF type; convert to iterable of Python strings
     if value.list.s is None:
       raise ValueError("Tried to set special '{}' attribute using "
@@ -855,7 +855,7 @@ def _validate_output_shapes_attr(value):
 
   Returns a list of output shapes extracted from the attribute value.
   """
-  if isinstance(value, tf.AttrValue):
+  if isinstance(value, tf.compat.v1.AttrValue):
     if value.list.shape is None:
       raise ValueError("Tried to set special '{}' attribute using "
                        "tf.AttrValue object, and the object's 'list.shape' "

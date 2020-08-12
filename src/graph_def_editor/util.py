@@ -499,7 +499,7 @@ _INTERNAL_VARIABLE_RE = re.compile(r"^__\w+__$")
 
 def get_predefined_collection_names():
   """Return all the predefined collection names."""
-  return [getattr(tf.GraphKeys, key) for key in dir(tf.GraphKeys)
+  return [getattr(tf.compat.v1.GraphKeys, key) for key in dir(tf.compat.v1.GraphKeys)
           if not _INTERNAL_VARIABLE_RE.match(key)]
 
 
@@ -593,7 +593,7 @@ def _python_type_to_attr_list_elem(
   elif isinstance(elem, tf.TensorShape):
     list_value.shape.add().CopyFrom(elem.as_proto())
   elif isinstance(elem, np.ndarray):
-    list_value.tensor.add().CopyFrom(tf.make_tensor_proto(values=elem))
+    list_value.tensor.add().CopyFrom(tf.compat.v1.make_tensor_proto(values=elem))
   # TODO(frreiss): Populate the "func" field of the union here
   else:
     raise ValueError("Don't know how to convert a {} to "
@@ -616,33 +616,33 @@ def python_type_to_attr_value(value #type: Any
   """
   if isinstance(value, list) or isinstance(value, tuple):
     if 0 == len(value):
-      return tf.AttrValue(list=tf.AttrValue.ListValue())
+      return tf.compat.v1.AttrValue(list=tf.compat.v1.AttrValue.ListValue())
     else:
       # Nonempty list
-      list_value = tf.AttrValue.ListValue()
+      list_value = tf.compat.v1.AttrValue.ListValue()
       for elem in value:
         # TODO(frreiss): Should we disallow heterogeneous types in lists?
         _python_type_to_attr_list_elem(list_value, elem)
-      return tf.AttrValue(list=list_value)
-  elif isinstance(value, tf.AttrValue):
+      return tf.compat.v1.AttrValue(list=list_value)
+  elif isinstance(value, tf.compat.v1.AttrValue):
     # TODO(frreiss): Should this case result in an error?
     return value
   # Scalar types, in the order they appear in the .proto file
   elif isinstance(value, string_types):
-    return tf.AttrValue(s=tf.compat.as_bytes(value))
+    return tf.compat.v1.AttrValue(s=tf.compat.as_bytes(value))
   # Must check for bool before int because bool is a subclass of int in Python
   elif isinstance(value, bool):
-    return tf.AttrValue(b=value)
+    return tf.compat.v1.AttrValue(b=value)
   elif isinstance(value, int):
-    return tf.AttrValue(i=value)
+    return tf.compat.v1.AttrValue(i=value)
   elif isinstance(value, float):
-    return tf.AttrValue(f=value)
+    return tf.compat.v1.AttrValue(f=value)
   elif isinstance(value, tf.DType):
-    return tf.AttrValue(type=value.as_datatype_enum)
+    return tf.compat.v1.AttrValue(type=value.as_datatype_enum)
   elif isinstance(value, tf.TensorShape):
-    return tf.AttrValue(shape=value.as_proto())
+    return tf.compat.v1.AttrValue(shape=value.as_proto())
   elif isinstance(value, np.ndarray):
-    return tf.AttrValue(tensor=tf.make_tensor_proto(values=value))
+    return tf.compat.v1.AttrValue(tensor=tf.compat.v1.make_tensor_proto(values=value))
   # TODO(frreiss): Populate the "func" and "placeholder" fields of the union
   #  here
   else:
@@ -702,7 +702,7 @@ def load_variables_to_tf_graph(g # type: graph.Graph
   for var_name in g.variable_names:
     var = g.get_variable_by_name(var_name)
     tf_var = tf.Variable.from_proto(var.to_proto())
-    tf.add_to_collections(var.collection_names, tf_var)
+    tf.compat.v1.add_to_collections(var.collection_names, tf_var)
 
 
 def make_const(g, # type: graph.Graph

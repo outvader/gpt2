@@ -516,7 +516,7 @@ class Transformer(object):
   def _connect_control_inputs(self, info):
     """Connect the previously copied ops."""
     for op in info.sgv.ops:
-      tf.logging.debug("Connecting control inputs of op: %s", op.name)
+      tf.compat.v1.logging.debug("Connecting control inputs of op: %s", op.name)
       op_ = info.transformed_ops[op]
 
       # Finalize control inputs:
@@ -578,7 +578,7 @@ class Transformer(object):
     elif t.node in info.ops:
       # `t` is an internal tensor but is not transformed yet because it
       # belongs to a graph cycle.
-      tf.logging.debug("Cyclic tensor: t.name = %s", t.name)
+      tf.compat.v1.logging.debug("Cyclic tensor: t.name = %s", t.name)
       # Try to find an existing tensor we can use for now,
       # otherwise create one. We'll rewire this later.
       if consumer_op.op_type == "Merge":
@@ -591,7 +591,7 @@ class Transformer(object):
         tmp_t_ = util.make_placeholder_from_tensor(info.graph_, t,
                                                    scope=info.scope_,
                                                    prefix="geph_tmp")
-        tf.logging.debug("Created temporary placeholder: %s.", tmp_t_.name)
+        tf.compat.v1.logging.debug("Created temporary placeholder: %s.", tmp_t_.name)
       # Register as temporary and return.
       info.tmp_cyclic_ts.append((t, tmp_t_, consumer_op))
       return tmp_t_

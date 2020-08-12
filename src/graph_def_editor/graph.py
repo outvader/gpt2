@@ -141,13 +141,13 @@ class Graph(object):
         to the graph, AKA signatures
     """
     if g is None:
-      graph_def = tf.GraphDef()
-    elif isinstance(g, tf.GraphDef):
+      graph_def = tf.compat.v1.GraphDef()
+    elif isinstance(g, tf.compat.v1.GraphDef):
       graph_def = g
     elif isinstance(g, tf.Graph):
       graph_def = g.as_graph_def()
       if collections is None:
-        meta_gd = tf.train.export_meta_graph(graph=g)
+        meta_gd = tf.compat.v1.train.export_meta_graph(graph=g)
         collections = _extract_collection_defs(meta_gd)
     else:
       raise TypeError("Graph is of type {}. Expected a tf.Graph or GraphDef "
@@ -638,7 +638,7 @@ class Graph(object):
     Returns the `tf.GraphDef` serialization of this graph in its current
     form.
     """
-    ret = tf.GraphDef()
+    ret = tf.compat.v1.GraphDef()
     ret.versions.CopyFrom(self._passthrough_versions)
     for op in self.nodes:
       op.to_node_def(ret.node.add(), add_shapes)
@@ -675,7 +675,7 @@ class Graph(object):
     specified location.
     """
     if tags is None:
-      tags = [tf.saved_model.tag_constants.SERVING]
+      tags = [tf.saved_model.SERVING]
     if os.path.exists(saved_model_path):
       raise ValueError("Output path '{}' already exists".format(
         saved_model_path))
@@ -702,7 +702,7 @@ class Graph(object):
     # The first field of the MetaInfoDef is called "meta_graph_version".
     # This field does not actually hold the version of the MetaGraph. Instead
     # it holds an arbitrary string that can be whatever you want.
-    meta_info_def = tf.MetaGraphDef.MetaInfoDef()
+    meta_info_def = tf.compat.v1.MetaGraphDef.MetaInfoDef()
     meta_info_def.meta_graph_version = self.name
 
     # The second field, "stripped_op_list" holds "A copy fo the OpDefs used by
@@ -721,8 +721,8 @@ class Graph(object):
     # The fifth and sixth fields hold TensorFlow version information.
     # We punt here and populate these fields with the version info from
     # the current Python session's copy of TensorFlow.
-    meta_info_def.tensorflow_version = tf.VERSION
-    meta_info_def.tensorflow_git_version = tf.GIT_VERSION
+    meta_info_def.tensorflow_version = tf.version.VERSION
+    meta_info_def.tensorflow_git_version = tf.version.GIT_VERSION
 
     # The final field, "stripped_default_attrs", is "A flag to denote whether
     # default-valued attrs have been stripped from the nodes in this graph_def"
